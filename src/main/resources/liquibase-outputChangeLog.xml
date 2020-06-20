@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Krisztian (generated)" id="1592695853642-1">
+        <createTable tableName="gym_pass">
+            <column autoIncrement="true" name="pass_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="pass_type" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remaining_sessions" type="VARCHAR(45)"/>
+            <column name="valid_from" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="VARCHAR(45)"/>
+            <column name="payment_type" type="VARCHAR(45)"/>
+            <column name="payment_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-2">
+        <createTable tableName="room">
+            <column autoIncrement="true" name="room_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="room_building" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_number" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_size" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-3">
+        <createTable tableName="subscription">
+            <column name="user_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-4">
+        <createTable tableName="user">
+            <column name="user_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(45)"/>
+            <column name="phone_number" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-5">
+        <createTable tableName="workout">
+            <column autoIncrement="true" name="workout_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="workout_type" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_room_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_date" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_coach" type="VARCHAR(45)"/>
+            <column name="workout_max_slot" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-6">
+        <addPrimaryKey columnNames="user_name" constraintName="PRIMARY" tableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-7">
+        <createIndex indexName="user_id_fk_idx" tableName="subscription">
+            <column name="user_name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-8">
+        <createIndex indexName="user_name_fk_idx" tableName="gym_pass">
+            <column name="user_name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-9">
+        <createIndex indexName="workout_coach_fk_idx" tableName="workout">
+            <column name="workout_coach"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-10">
+        <createIndex indexName="workout_room_id_idx" tableName="workout">
+            <column name="workout_room_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-11">
+        <createIndex indexName="worout_id_fk_idx" tableName="subscription">
+            <column name="workout_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-12">
+        <addForeignKeyConstraint baseColumnNames="user_name" baseTableName="subscription" constraintName="user_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="user_name" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-13">
+        <addForeignKeyConstraint baseColumnNames="user_name" baseTableName="gym_pass" constraintName="user_name_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="user_name" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-14">
+        <addForeignKeyConstraint baseColumnNames="workout_coach" baseTableName="workout" constraintName="workout_coach_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="user_name" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-15">
+        <addForeignKeyConstraint baseColumnNames="workout_room_id" baseTableName="workout" constraintName="workout_room_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="room_id" referencedTableName="room"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695853642-16">
+        <addForeignKeyConstraint baseColumnNames="workout_id" baseTableName="subscription" constraintName="worout_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="workout_id" referencedTableName="workout"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-1">
+        <createTable tableName="gym_pass">
+            <column autoIncrement="true" name="pass_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="pass_type" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remaining_sessions" type="VARCHAR(45)"/>
+            <column name="valid_from" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="VARCHAR(45)"/>
+            <column name="payment_type" type="VARCHAR(45)"/>
+            <column name="payment_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-2">
+        <createTable tableName="room">
+            <column autoIncrement="true" name="room_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="room_building" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_number" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_size" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-3">
+        <createTable tableName="subscription">
+            <column name="user_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-4">
+        <createTable tableName="user">
+            <column name="user_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(45)"/>
+            <column name="phone_number" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-5">
+        <createTable tableName="workout">
+            <column autoIncrement="true" name="workout_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="workout_type" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_room_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_date" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_coach" type="VARCHAR(45)"/>
+            <column name="workout_max_slot" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-6">
+        <addPrimaryKey columnNames="user_name" constraintName="PRIMARY" tableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-7">
+        <createIndex indexName="user_id_fk_idx" tableName="subscription">
+            <column name="user_name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-8">
+        <createIndex indexName="user_name_fk_idx" tableName="gym_pass">
+            <column name="user_name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-9">
+        <createIndex indexName="workout_coach_fk_idx" tableName="workout">
+            <column name="workout_coach"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-10">
+        <createIndex indexName="workout_room_id_idx" tableName="workout">
+            <column name="workout_room_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-11">
+        <createIndex indexName="worout_id_fk_idx" tableName="subscription">
+            <column name="workout_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-12">
+        <addForeignKeyConstraint baseColumnNames="user_name" baseTableName="subscription" constraintName="user_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="user_name" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-13">
+        <addForeignKeyConstraint baseColumnNames="user_name" baseTableName="gym_pass" constraintName="user_name_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="user_name" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-14">
+        <addForeignKeyConstraint baseColumnNames="workout_coach" baseTableName="workout" constraintName="workout_coach_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="user_name" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-15">
+        <addForeignKeyConstraint baseColumnNames="workout_room_id" baseTableName="workout" constraintName="workout_room_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="room_id" referencedTableName="room"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592695865451-16">
+        <addForeignKeyConstraint baseColumnNames="workout_id" baseTableName="subscription" constraintName="worout_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="workout_id" referencedTableName="workout"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-1">
+        <createTable tableName="gym_pass">
+            <column autoIncrement="true" name="pass_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="pass_type" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remaining_sessions" type="VARCHAR(45)"/>
+            <column name="valid_from" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="VARCHAR(45)"/>
+            <column name="payment_type" type="VARCHAR(45)"/>
+            <column name="payment_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-2">
+        <createTable tableName="room">
+            <column autoIncrement="true" name="room_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="room_building" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_number" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_size" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-3">
+        <createTable tableName="subscription">
+            <column name="user_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-4">
+        <createTable tableName="user">
+            <column name="user_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(45)"/>
+            <column name="phone_number" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-5">
+        <createTable tableName="workout">
+            <column autoIncrement="true" name="workout_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="workout_type" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_room_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_date" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workout_coach" type="VARCHAR(45)"/>
+            <column name="workout_max_slot" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-6">
+        <addPrimaryKey columnNames="user_name" constraintName="PRIMARY" tableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-7">
+        <createIndex indexName="user_id_fk_idx" tableName="subscription">
+            <column name="user_name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-8">
+        <createIndex indexName="user_name_fk_idx" tableName="gym_pass">
+            <column name="user_name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-9">
+        <createIndex indexName="workout_coach_fk_idx" tableName="workout">
+            <column name="workout_coach"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-10">
+        <createIndex indexName="workout_room_id_idx" tableName="workout">
+            <column name="workout_room_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-11">
+        <createIndex indexName="worout_id_fk_idx" tableName="subscription">
+            <column name="workout_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-12">
+        <addForeignKeyConstraint baseColumnNames="user_name" baseTableName="subscription" constraintName="user_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="user_name" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-13">
+        <addForeignKeyConstraint baseColumnNames="user_name" baseTableName="gym_pass" constraintName="user_name_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="user_name" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-14">
+        <addForeignKeyConstraint baseColumnNames="workout_coach" baseTableName="workout" constraintName="workout_coach_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="user_name" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-15">
+        <addForeignKeyConstraint baseColumnNames="workout_room_id" baseTableName="workout" constraintName="workout_room_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="room_id" referencedTableName="room"/>
+    </changeSet>
+    <changeSet author="Krisztian (generated)" id="1592696996232-16">
+        <addForeignKeyConstraint baseColumnNames="workout_id" baseTableName="subscription" constraintName="worout_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="workout_id" referencedTableName="workout"/>
+    </changeSet>
+</databaseChangeLog>
